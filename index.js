@@ -90,8 +90,8 @@ animate = (particles) => {
         particles[i].easeInMoveTo(
           -deltaX[i], 
           -deltaY[i], 
-          400, 
-          400, 
+          w/2, 
+          h/2, 
           afterClickFrames/afterClickParticleMoveFrames
         );
         // 给粒子一个顺着散开方向的初速度
@@ -113,8 +113,8 @@ animate = (particles) => {
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
     if(clickTimes % 2 != 0) {
       for(let i = 0; i < particles.length; i++) {
-        deltaX[i] = 400 - particles[i].posX;
-        deltaY[i] = 400 - particles[i].posY;
+        deltaX[i] = w/2 - particles[i].posX;
+        deltaY[i] = h/2 - particles[i].posY;
         startX[i] = particles[i].posX;
         startY[i] = particles[i].posY;
       }
