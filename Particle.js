@@ -1,13 +1,13 @@
 /*
  * 粒子属性：坐标，半径，速度（两个分量），加速度，颜色
- * 粒子方法：运动，绘制
+ * 粒子方法：运动（逐帧自由运动，ease-out插值运动），绘制
 */
 class Particle {
   constructor(posX, posY, radius, velX, velY, accelerationX, accelerationY, color, type) {
     this.posX = posX;
     this.posY = posY;
     this.radius = radius;
-    // 速度，加速度单位为px/f, px/f²
+    // 速度，加速度单位为px/f, px/f²（f为帧）
     this.velX = velX;
     this.velY = velY;
     this.accelerationX = accelerationX;
@@ -16,6 +16,7 @@ class Particle {
     this.type = type;
   }
 
+  // 碰撞检测
   outOfHorizontalBorder() {
     const h = document.documentElement.clientHeight;
     return this.posY < this.radius || this.posY > h - this.radius;
@@ -26,6 +27,7 @@ class Particle {
     return this.posX < this.radius || this.posX > w - this.radius;
   }
 
+  // 逐帧自由运动
   movePerFrame() { 
     if(this.type === 'free') {
       this.posX += this.velX;
@@ -41,9 +43,9 @@ class Particle {
     }
   }
 
+  // ease-out插值运动
   easeOutMoveTo(dX, dY, sX, sY, t) {
     this.type = 'unfree';
-    this.velX = this.velY = this.accelerationX = this.accelerationY = 0;
     this.posX = dX * ((t - 1)*(t - 1)*(t - 1) + 1) + sX;
     this.posY = dY * ((t - 1)*(t - 1)*(t - 1) + 1) + sY;
   }
