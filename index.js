@@ -58,7 +58,6 @@ createParticle = () => {
 
     particles.push(particle);
   }
-
   return particles;
 }
 
@@ -74,7 +73,7 @@ animate = (particles) => {
   // 鼠标点击后，粒子准备运动
   if(afterClick) {
     // 点击次数为奇数，则粒子聚拢
-    // 否则粒子散开，回到原来位置
+    // 否则粒子散开，回到原来位置，同时给予粒子合理的初速度，使动画顺滑
     if(clickTimes % 2 != 0) {
       for(let i = 0; i < particles.length; i++) {
         particles[i].easeOutMoveTo(
@@ -88,14 +87,16 @@ animate = (particles) => {
       afterClickFrames++;
     } else {
       for(let i = 0; i < particles.length; i++) {
-        particles[i].easeOutMoveTo(
+        particles[i].easeInMoveTo(
           -deltaX[i], 
           -deltaY[i], 
           400, 
           400, 
           afterClickFrames/afterClickParticleMoveFrames
         );
-        particles[i].type = 'free';
+        // 给粒子一个顺着散开方向的初速度
+        particles[i].velX = -deltaX[i] / 500;
+        particles[i].velY = -deltaY[i] / 500;
       }
       afterClickFrames++;
     }

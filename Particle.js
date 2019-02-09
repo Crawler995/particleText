@@ -1,6 +1,6 @@
 /*
  * 粒子属性：坐标，半径，速度（两个分量），加速度，颜色
- * 粒子方法：运动（逐帧自由运动，ease-out插值运动），绘制
+ * 粒子方法：运动（逐帧自由运动，ease-out/in插值运动），绘制
 */
 class Particle {
   constructor(posX, posY, radius, velX, velY, accelerationX, accelerationY, color, type) {
@@ -48,6 +48,13 @@ class Particle {
     this.type = 'unfree';
     this.posX = dX * ((t - 1)*(t - 1)*(t - 1) + 1) + sX;
     this.posY = dY * ((t - 1)*(t - 1)*(t - 1) + 1) + sY;
+  }
+
+  // ease-in插值运动
+  easeInMoveTo(dX, dY, sX, sY, t) {
+    this.type = 'free';
+    this.posX = dX * t * t * t + sX;
+    this.posY = dY * t * t * t + sY;
   }
 
   draw() {
