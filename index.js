@@ -108,6 +108,10 @@ animate = (particles) => {
   }
 
   canvas.onclick = () => {
+    // 在粒子处于不自由运动状态时忽略点击事件
+    if(afterClickFrames != 0) {
+      return;
+    }
     clickTimes++;
     afterClick = true;
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
