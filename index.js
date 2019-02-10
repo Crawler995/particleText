@@ -23,7 +23,7 @@ let deltaRadius = null;
 let clickTimes = 0;
 
 let words = new Text(
-  ['邓茜', '最美'],
+  ['毛晓鋆', '在我心里', '最美'],
   100,
   5
 );
