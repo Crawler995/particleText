@@ -166,7 +166,7 @@ window.onload = () => {
   words.init();
 
   // 得到所需粒子数
-  particleNum = words.getMostNeedParticleNum();
+  particleNum = words.getMostNeedParticleNum() + 20;
 
   deltaX = new Array(particleNum);
   deltaY = new Array(particleNum);
