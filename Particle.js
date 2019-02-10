@@ -1,6 +1,6 @@
 /*
  * 粒子属性：坐标，半径，速度（两个分量），加速度，颜色
- * 粒子方法：运动（逐帧自由运动，ease-out/in插值运动），绘制
+ * 粒子方法：碰撞检测，运动（逐帧自由运动，ease-out/in插值运动），半径插值变化，绘制
 */
 class Particle {
   constructor(posX, posY, radius, velX, velY, accelerationX, accelerationY, color, type) {
@@ -55,6 +55,14 @@ class Particle {
     this.type = 'free';
     this.posX = dX * t * t * t + sX;
     this.posY = dY * t * t * t + sY;
+  }
+
+  easeOutRadiusChange(dr, sr, t) {
+    this.radius = dr * ((t - 1)*(t - 1)*(t - 1) + 1) + sr;
+  }
+
+  easeInRadiusChange(dr, sr, t) {
+    this.radius = dr * t * t * t + sr;
   }
 
   draw() {

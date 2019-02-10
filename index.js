@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 const w = document.documentElement.clientWidth;
 const h = document.documentElement.clientHeight;
 
-const particleNum = 70;
+let particleNum = 0;
 
 // 鼠标点击后累计的帧数
 let afterClickFrames = 0;
@@ -12,12 +12,21 @@ let afterClick = false;
 // 鼠标点击后粒子需要多少帧的时间去运动到指定位置
 const afterClickParticleMoveFrames = 60;
 // 记录鼠标点击后粒子位置，及粒子位置到目标位置的差值
-let deltaX = new Array(particleNum);
-let deltaY = new Array(particleNum);
-let startX = new Array(particleNum);
-let startY = new Array(particleNum);
+let deltaX = null;
+let deltaY = null;
+let startX = null;
+let startY = null;
+// 记录鼠标点击后粒子半径，及粒子半径到目标半径的差值
+let startRadius = null;
+let deltaRadius = null;
 
 let clickTimes = 0;
+
+let words = new Text(
+  ['邓茜', '最美'],
+  100,
+  5
+);
 
 // 返回min到max之间的随机数
 randNum = (min, max) => {
@@ -70,12 +79,16 @@ animate = (particles) => {
     particles[i].movePerFrame();
   }
 
+  // 当前绘制第几条文本
+  let wordIndex = (clickTimes % 2 != 0) ? Math.floor(clickTimes / 2) % words.text.length
+                                            : Math.floor((clickTimes-1) / 2) % words.text.length;
   // 鼠标点击后，粒子准备运动
   if(afterClick) {
     // 点击次数为奇数，则粒子聚拢
     // 否则粒子散开，回到原来位置，同时给予粒子合理的初速度，使动画顺滑
+    // 在聚拢的过程中半径变为文本像素大小，散开时反之
     if(clickTimes % 2 != 0) {
-      for(let i = 0; i < particles.length; i++) {
+      for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         particles[i].easeOutMoveTo(
           deltaX[i], 
           deltaY[i], 
@@ -83,15 +96,25 @@ animate = (particles) => {
           startY[i], 
           afterClickFrames/afterClickParticleMoveFrames
         );
+        particles[i].easeOutRadiusChange(
+          deltaRadius[i],
+          startRadius[i],
+          afterClickFrames/afterClickParticleMoveFrames
+        );
       }
       afterClickFrames++;
     } else {
-      for(let i = 0; i < particles.length; i++) {
+      for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         particles[i].easeInMoveTo(
           -deltaX[i], 
           -deltaY[i], 
-          w/2, 
-          h/2, 
+          startX[i] + deltaX[i], 
+          startY[i] + deltaY[i], 
+          afterClickFrames/afterClickParticleMoveFrames
+        );
+        particles[i].easeInRadiusChange(
+          -deltaRadius[i],
+          startRadius[i] + deltaRadius[i],
           afterClickFrames/afterClickParticleMoveFrames
         );
         // 给粒子一个顺着散开方向的初速度
@@ -114,13 +137,20 @@ animate = (particles) => {
     }
     clickTimes++;
     afterClick = true;
+
+    // 点击次数增加，更新wordIndex
+    wordIndex = (clickTimes % 2 != 0) ? Math.floor(clickTimes / 2) % words.text.length
+                                      : Math.floor((clickTimes-1) / 2) % words.text.length;
+
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
     if(clickTimes % 2 != 0) {
-      for(let i = 0; i < particles.length; i++) {
-        deltaX[i] = w/2 - particles[i].posX;
-        deltaY[i] = h/2 - particles[i].posY;
+      for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
+        deltaX[i] = words.textPixelPosArray[wordIndex][i].x - particles[i].posX;
+        deltaY[i] = words.textPixelPosArray[wordIndex][i].y - particles[i].posY;
         startX[i] = particles[i].posX;
         startY[i] = particles[i].posY;
+        deltaRadius[i] = words.pixelSize - particles[i].radius;
+        startRadius[i] = particles[i].radius;
       }
     }
   }
@@ -132,6 +162,19 @@ animate = (particles) => {
 
 window.onload = () => {
   initCanvasSize();
+
+  words.init();
+
+  // 得到所需粒子数
+  particleNum = words.getMostNeedParticleNum();
+
+  deltaX = new Array(particleNum);
+  deltaY = new Array(particleNum);
+  startX = new Array(particleNum);
+  startY = new Array(particleNum);
+  startRadius = new Array(particleNum);
+  deltaRadius = new Array(particleNum);
+
   let particles = createParticle();
   animate(particles);
 }
