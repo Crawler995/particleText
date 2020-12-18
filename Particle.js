@@ -3,7 +3,7 @@
  * 粒子方法：碰撞检测，运动（逐帧自由运动，ease-out/in插值运动），半径插值变化，绘制
 */
 class Particle {
-  constructor(posX, posY, radius, velX, velY, accelerationX, accelerationY, color, type) {
+  constructor(posX, posY, radius, velX, velY, accelerationX, accelerationY, alpha, type) {
     this.posX = posX;
     this.posY = posY;
     this.radius = radius;
@@ -12,7 +12,7 @@ class Particle {
     this.velY = velY;
     this.accelerationX = accelerationX;
     this.accelerationY = accelerationY;
-    this.color = color;
+    this.alpha = alpha;
     this.type = type;
   }
 
@@ -65,8 +65,16 @@ class Particle {
     this.radius = dr * t * t * t + sr;
   }
 
+  easeOutAlphaChange(dr, sr, t) {
+    this.alpha = dr * ((t - 1)*(t - 1)*(t - 1) + 1) + sr;
+  }
+
+  easeInAlphaChange(dr, sr, t) {
+    this.alpha = dr * t * t * t + sr;
+  }
+
   draw() {
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha}`;
     ctx.beginPath();
     ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI*2, true);
     ctx.fill();

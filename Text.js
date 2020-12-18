@@ -26,7 +26,7 @@ class Text {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#000';
-    ctx.font = '' + this.fontSize + 'px Microsoft Yahei';
+    ctx.font = '' + this.fontSize + 'px Arial';
     ctx.textBaseline = 'hanging';
     ctx.textAlign = 'center';
     ctx.fillText(this.text[index], w/2, h/4);
@@ -58,7 +58,7 @@ class Text {
             blackPixelNum += (red === 0 ? 1 : 0);
           }
         }
-        curRowTextPixelMatrix.push(blackPixelNum > parseInt(this.pixelSize * this.pixelSize / 3));
+        curRowTextPixelMatrix.push(blackPixelNum > parseInt(this.pixelSize * this.pixelSize / 4));
       }
       curTextPixelMatrix.push(curRowTextPixelMatrix);
     }
