@@ -60,7 +60,7 @@ createParticle = () => {
       randNum(10, w-10),
       randNum(10, h-10),
       randNum(2, 6),
-      randNum(0, 0.7),
+      randNum(-0.7, 0.7),
       randNum(0, 0.7),
       0,
       0,
@@ -198,7 +198,7 @@ animate = (particles) => {
         offset = 200.0
 
         dirX = particles[i].posX - w / 2 + randNum(-offset, offset)
-        dirY = particles[i].posY - h / 4 + randNum(-offset, offset)
+        dirY = particles[i].posY - h / 5 + randNum(-offset, offset)
         dis = Math.sqrt(dirX**2 + dirY**2)
         dirX /= dis
         dirY /= dis

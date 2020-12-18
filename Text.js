@@ -26,10 +26,10 @@ class Text {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#000';
-    ctx.font = '' + this.fontSize + 'px PingFangSC-Regular,Verdana,Arial,微软雅黑,宋体';
+    ctx.font = '' + this.fontSize + 'px Arial';
     ctx.textBaseline = 'hanging';
     ctx.textAlign = 'center';
-    ctx.fillText(this.text[index], w/2, h/4);
+    ctx.fillText(this.text[index], w/2, h/5);
   }
 
   getTextPixelMatrix() {

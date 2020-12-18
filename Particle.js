@@ -34,9 +34,12 @@ class Particle {
       this.posY += this.velY;
       this.velX += this.accelerationX;
       this.velY += this.accelerationY;
-      if(this.outOfHorizontalBorder()) {
+      if(this.posY > h) {
+        this.posY = -this.radius;
+      } else if (this.posY < -this.radius) {
         this.velY = -this.velY;
       }
+
       if(this.outOfVerticalBorder()) {
         this.velX = -this.velX;
       }
