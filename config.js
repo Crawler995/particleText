@@ -1,7 +1,7 @@
 const config = {
   text: {
-    content: ['❄', '☃'],
-    // content: ['as', 'df'],
+    // content: ['❄', '☃'],
+    content: ['as', 'df'],
     fontSize: 600,
     pixelSize: 14
   },
