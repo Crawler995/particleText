@@ -29,7 +29,7 @@ class Text {
     ctx.font = '' + this.fontSize + 'px Arial';
     ctx.textBaseline = 'hanging';
     ctx.textAlign = 'center';
-    ctx.fillText(this.text[index], w/2, h/5);
+    ctx.fillText(this.text[index], w/2, h/2 - this.fontSize);
   }
 
   getTextPixelMatrix() {

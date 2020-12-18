@@ -61,7 +61,7 @@ createParticle = () => {
       randNum(10, h-10),
       randNum(2, 6),
       randNum(-0.7, 0.7),
-      randNum(0, 0.7),
+      randNum(0.7, 1.4),
       0,
       0,
       randNum(0.3, 0.8),
@@ -153,8 +153,8 @@ animate = (particles) => {
           afterClickFrames/afterClickParticleMoveFrames
         );
         // 给粒子一个顺着散开方向的初速度
-        particles[i].velX = (deltaX[i]) / 400;
-        particles[i].velY = (deltaY[i]) / 400;
+        particles[i].velX = (deltaX[i]) / 200;
+        particles[i].velY = (deltaY[i]) / 200;
       }
       afterClickFrames++;
     }
@@ -198,12 +198,12 @@ animate = (particles) => {
         offset = 200.0
 
         dirX = particles[i].posX - w / 2 + randNum(-offset, offset)
-        dirY = particles[i].posY - h / 5 + randNum(-offset, offset)
+        dirY = particles[i].posY - h / 2 + config.text.fontSize + randNum(-offset, offset)
         dis = Math.sqrt(dirX**2 + dirY**2)
         dirX /= dis
         dirY /= dis
         
-        factor = randNum(150, 350)
+        factor = randNum(100, 300)
         destX = particles[i].posX + dirX * factor
         destY = particles[i].posY + dirY * factor
 
