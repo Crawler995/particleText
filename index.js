@@ -188,7 +188,7 @@ animate = (particles) => {
 
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
     if(clickTimes % 2 != 0) {
-      textDiv.innerHTML = 'Gathering...'
+      textDiv.innerHTML = 'Gather into snowflakes...'
 
       for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         offset = 3.0
