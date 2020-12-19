@@ -3,7 +3,9 @@ const ctx = canvas.getContext('2d');
 const w = document.documentElement.clientWidth;
 const h = document.documentElement.clientHeight;
 
-const textDiv = document.getElementsByClassName('text')[0];
+const snowDiv = document.getElementsByClassName('snow')[0];
+const gatherDiv = document.getElementsByClassName('gather')[0];
+const fadedDiv = document.getElementsByClassName('faded')[0];
 
 let particleNum = 0;
 
@@ -188,7 +190,9 @@ animate = (particles) => {
 
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
     if(clickTimes % 2 != 0) {
-      textDiv.innerHTML = 'Gather into snowflakes...'
+      snowDiv.style.opacity = 0
+      gatherDiv.style.opacity = 1
+      fadedDiv.style.opacity = 0
 
       for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         offset = 3.0
@@ -205,7 +209,9 @@ animate = (particles) => {
         startAlpha[i] = particles[i].alpha
       }
     } else {
-      textDiv.innerHTML = 'Then faded.'
+      snowDiv.style.opacity = 0
+      gatherDiv.style.opacity = 0
+      fadedDiv.style.opacity = 1
 
       for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         offset = 200.0

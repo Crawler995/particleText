@@ -29,14 +29,20 @@
       font-size: 20px;
       text-shadow: 0px 0px 3px #fff;
 
-      transition: all 0.5s;
+      transition: all 2s;
+    }
+
+    .gather, .faded {
+      opacity: 0;
     }
   </style>
 </head>
 <body>
   <canvas></canvas>
 
-  <div class="text">Snow</div>
+  <div class="text snow">Snow</div>
+  <div class="text gather">Gather into snowflakes...</div>
+  <div class="text faded">Then faded.</div>
 
   <script src="config.js"></script>
   <script src="Text.js"></script>
