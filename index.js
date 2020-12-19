@@ -3,6 +3,8 @@ const ctx = canvas.getContext('2d');
 const w = document.documentElement.clientWidth;
 const h = document.documentElement.clientHeight;
 
+const textDiv = document.getElementsByClassName('text')[0];
+
 let particleNum = 0;
 
 // 鼠标点击后累计的帧数
@@ -10,7 +12,8 @@ let afterClickFrames = 0;
 // 是否在鼠标点击后afterClickParticleMoveFrames帧之内
 let afterClick = false;
 // 鼠标点击后粒子需要多少帧的时间去运动到指定位置
-const afterClickParticleMoveFrames = 90;
+const afterClickParticleMoveInFrames = 300;
+const afterClickParticleMoveOutFrames = 90;
 // 记录鼠标点击后粒子位置，及粒子位置到目标位置的差值
 let deltaX = null;
 let deltaY = null;
@@ -59,7 +62,7 @@ createParticle = () => {
     let particle = new Particle(
       randNum(10, w-10),
       randNum(10, h-10),
-      randNum(2, 6),
+      randNum(1, 3),
       randNum(-0.7, 0.7),
       randNum(0.7, 1.4),
       0,
@@ -97,17 +100,17 @@ animate = (particles) => {
           deltaY[i], 
           startX[i], 
           startY[i], 
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveInFrames
         );
         particles[i].easeOutRadiusChange(
           deltaRadius[i],
           startRadius[i],
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveInFrames
         );
         particles[i].easeOutAlphaChange(
           deltaAlpha[i],
           startAlpha[i],
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveInFrames
         );
       }
       afterClickFrames++;
@@ -126,7 +129,7 @@ animate = (particles) => {
           deltaY[i], 
           startX[i], 
           startY[i], 
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveOutFrames
         );
 
         // dirX = particles[i].posX - w / 2
@@ -145,22 +148,28 @@ animate = (particles) => {
         particles[i].easeInRadiusChange(
           -deltaRadius[i],
           startRadius[i] + deltaRadius[i],
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveOutFrames
         );
         particles[i].easeInAlphaChange(
           -deltaAlpha[i],
           startAlpha[i] + deltaAlpha[i],
-          afterClickFrames/afterClickParticleMoveFrames
+          afterClickFrames/afterClickParticleMoveOutFrames
         );
         // 给粒子一个顺着散开方向的初速度
         particles[i].velX = (deltaX[i]) / 200;
         particles[i].velY = (deltaY[i]) / 200;
+        particles[i].accelerationY = 0.002
       }
       afterClickFrames++;
     }
   }
   // 粒子已运动到指定位置，点击状态重新初始化
-  if(afterClickFrames > afterClickParticleMoveFrames) {
+  if(clickTimes % 2 != 0 && afterClickFrames > afterClickParticleMoveInFrames) {
+    afterClick = false;
+    afterClickFrames = 0;
+  }
+
+  if(clickTimes % 2 == 0 && afterClickFrames > afterClickParticleMoveOutFrames) {
     afterClick = false;
     afterClickFrames = 0;
   }
@@ -179,6 +188,8 @@ animate = (particles) => {
 
     // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
     if(clickTimes % 2 != 0) {
+      textDiv.innerHTML = 'Gathering...'
+
       for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         offset = 3.0
         deltaX[i] = words.textPixelPosArray[wordIndex][i].x - particles[i].posX + randNum(-offset, offset);
@@ -194,6 +205,8 @@ animate = (particles) => {
         startAlpha[i] = particles[i].alpha
       }
     } else {
+      textDiv.innerHTML = 'Then faded.'
+
       for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
         offset = 200.0
 
@@ -203,7 +216,7 @@ animate = (particles) => {
         dirX /= dis
         dirY /= dis
         
-        factor = randNum(100, 300)
+        factor = randNum(w/6, w/4)
         destX = particles[i].posX + dirX * factor
         destY = particles[i].posY + dirY * factor
 

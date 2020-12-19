@@ -2,8 +2,8 @@ const config = {
   text: {
     content: ['❆', '❅', '❉', '❊'],
     // content: ['as', 'df'],
-    fontSize: 600,
-    pixelSize: 14
+    fontSize: 260,
+    pixelSize: 5
   },
 
   background: {

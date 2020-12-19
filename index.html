@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>snow</title>
   <style>
+    @import 'https://fonts.googleapis.com/css?family=Lato:300';
+
     *{
       margin: 0px;
       padding: 0px;
@@ -14,11 +16,27 @@
 
     body {
       overflow: hidden;
+
+      font-family: 'Lato';
+    }
+
+    .text {
+      position: absolute;
+      width: 100%;
+      bottom: 100px;
+      color: #fff;
+      text-align: center;
+      font-size: 20px;
+      text-shadow: 0px 0px 3px #fff;
+
+      transition: all 0.5s;
     }
   </style>
 </head>
 <body>
   <canvas></canvas>
+
+  <div class="text">Snow</div>
 
   <script src="config.js"></script>
   <script src="Text.js"></script>

@@ -14,6 +14,8 @@ class Particle {
     this.accelerationY = accelerationY;
     this.alpha = alpha;
     this.type = type;
+
+    this.maxVelY = this.velY;
   }
 
   // 碰撞检测
@@ -42,6 +44,10 @@ class Particle {
 
       if(this.outOfVerticalBorder()) {
         this.velX = -this.velX;
+      }
+
+      if (this.velY > this.maxVelY) {
+        this.accelerationY = 0
       }
     }
   }
