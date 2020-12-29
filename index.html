@@ -51,7 +51,6 @@
       padding: 16px;
       font-size: 14px;
       color: rgb(100, 100, 100);
-      text-indent: 20px;
       line-height: 24px;
 
       overflow-y: auto;
@@ -99,7 +98,7 @@
 
     @keyframes letter-2-in
     {
-      from {top: -200%;}
+      from {top: -200%; transform: rotate(0deg);}
       to {top: 0; transform: rotate(-2.5deg);}
     }
 
@@ -121,10 +120,16 @@
     }
 
     @keyframes letter-3-in {
-      from {top: -200%;}
+      from {top: -200%; transform: rotate(0deg);}
       to {top: 0; transform: rotate(2.4deg);}
     }
+
+    .typed-cursor {
+      color: #ee9ca7;
+    }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 </head>
 <body>
   <canvas></canvas>
@@ -133,11 +138,7 @@
 
   <div class="letter-wrapper">
     <div class="letter letter-1">
-      <p>Orange Pi 4B 不仅仅是一款消费品，同时也是给任何想用技术来进行创作创新的人设计的。它是一款非常简单、有趣、实用的工具，你可以用它去打造你身边的世界。</p>
-      <p>Orange Pi 4B 不仅仅是一款消费品，同时也是给任何想用技术来进行创作创新的人设计的。它是一款非常简单、有趣、实用的工具，你可以用它去打造你身边的世界。</p>
-      <p>Orange Pi 4B 不仅仅是一款消费品，同时也是给任何想用技术来进行创作创新的人设计的。它是一款非常简单、有趣、实用的工具，你可以用它去打造你身边的世界。</p>
-      <p>Orange Pi 4B 不仅仅是一款消费品，同时也是给任何想用技术来进行创作创新的人设计的。它是一款非常简单、有趣、实用的工具，你可以用它去打造你身边的世界。</p>
-      <p>Orange Pi 4B 不仅仅是一款消费品，同时也是给任何想用技术来进行创作创新的人设计的。它是一款非常简单、有趣、实用的工具，你可以用它去打造你身边的世界。</p>
+      <span class="letter-typing-content"></span>
     </div>
     <div class="letter letter-2"></div>
     <div class="letter letter-3"></div>
@@ -147,6 +148,7 @@
   <script src="Text.js"></script>
   <script src="Particle.js"></script>
   <script src="subtitle.js"></script>
+  <script src="type.js"></script>
   <script src="index.js"></script>
 </body>
 </html>
