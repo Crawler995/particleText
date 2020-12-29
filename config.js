@@ -1,13 +1,13 @@
 const config = {
   text: {
-    content: ['❆', '❅', '❉', '❊'],
+    content: ['2021'],
     // content: ['as', 'df'],
-    fontSize: 260,
-    pixelSize: 5
+    fontSize: 100,
+    pixelSize: 4
   },
 
   background: {
-    colors: ['#D9AFD9', '#97D9E1']
+    colors: ['#EADCDC', '#e3cfcf']
   }
 }
 
