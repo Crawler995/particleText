@@ -7,7 +7,7 @@ const config = {
   },
 
   background: {
-    colors: ['#EADCDC', '#e3cfcf']
+    colors: ['#ffced3', '#ee9ca7']
   }
 }
 
