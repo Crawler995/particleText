@@ -266,6 +266,11 @@ window.onload = () => {
   changeSubtitle('At the end of 2020', 2000);
   changeSubtitle('There is a special gift for u', 5000);
 
+  const letter1 = document.getElementsByClassName('letter-1')[0];
+  setInterval(() => {
+    letter1.scrollTop = 10000;
+  }, 100);
+
   // type
   setTimeout(() => {
     new Typed('.letter-typing-content', {
