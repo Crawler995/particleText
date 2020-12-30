@@ -249,7 +249,7 @@ window.onload = () => {
 
   // subtitle
   changeSubtitle('At the end of 2020', 2000);
-  changeSubtitle('I wanna write something to u.', 5000);
+  changeSubtitle('There is a special gift for u.', 5000);
 
   // type
   setTimeout(() => {
