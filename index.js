@@ -248,7 +248,7 @@ window.onload = () => {
   animate(particles);
 
   // subtitle
-  changeSubtitle('At the end of 2020,', 2000);
+  changeSubtitle('At the end of 2020', 2000);
   changeSubtitle('I wanna write something to u.', 5000);
 
   // type
@@ -256,7 +256,11 @@ window.onload = () => {
     new Typed('.letter-typing-content', {
       strings: content,
       typeSpeed: 170,
-      backSpeed: 50
+      backSpeed: 50,
+
+      onComplete: () => {
+        console.log('complete')
+      }
     });
   }, 8000);
 }

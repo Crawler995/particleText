@@ -1,4 +1,4 @@
-const subtitle = document.getElementsByClassName('subtitle')[0];
+const subtitle = document.getElementsByClassName('subtitle-content')[0];
 
 const changeSubtitle = (text, time) => {
   const transitionTime = 1000;
