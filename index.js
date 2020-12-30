@@ -10,7 +10,7 @@ let afterClickFrames = 0;
 // 是否在鼠标点击后afterClickParticleMoveFrames帧之内
 let afterClick = false;
 // 鼠标点击后粒子需要多少帧的时间去运动到指定位置
-const afterClickParticleMoveInFrames = 300;
+const afterClickParticleMoveInFrames = 250;
 const afterClickParticleMoveOutFrames = 90;
 // 记录鼠标点击后粒子位置，及粒子位置到目标位置的差值
 let deltaX = null;
@@ -31,6 +31,8 @@ let words = new Text(
   config.text.fontSize,
   config.text.pixelSize
 );
+
+let startAnimation = false;
 
 // 返回min到max之间的随机数
 randNum = (min, max) => {
@@ -172,55 +174,68 @@ animate = (particles) => {
     afterClickFrames = 0;
   }
 
-  canvas.onclick = () => {
-    // 在粒子处于不自由运动状态时忽略点击事件
-    if(afterClickFrames != 0) {
-      return;
-    }
-    clickTimes++;
-    afterClick = true;
+  (function(){
+    if(startAnimation) {
 
-    // 点击次数增加，更新wordIndex
-    wordIndex = (clickTimes % 2 != 0) ? Math.floor(clickTimes / 2) % words.text.length
-                                      : Math.floor((clickTimes-1) / 2) % words.text.length;
-
-    // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
-    if(clickTimes % 2 != 0) {
-      for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
-        offset = 3.0
-        deltaX[i] = words.textPixelPosArray[wordIndex][i].x - particles[i].posX + randNum(-offset, offset);
-        deltaY[i] = words.textPixelPosArray[wordIndex][i].y - particles[i].posY + randNum(-offset, offset);
-        startX[i] = particles[i].posX;
-        startY[i] = particles[i].posY;
-
-        base = (words.pixelSize - particles[i].radius) / randNum(2.0, 3.5)
-        deltaRadius[i] = base;
-        startRadius[i] = particles[i].radius;
-
-        deltaAlpha[i] = 1.0 - particles[i].alpha
-        startAlpha[i] = particles[i].alpha
+      // 在粒子处于不自由运动状态时忽略点击事件
+      if(afterClickFrames != 0 || clickTimes > 1) {
+        return;
       }
-    } else {
-      for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
-        offset = 200.0
 
-        dirX = particles[i].posX - w / 2 + randNum(-offset, offset)
-        dirY = particles[i].posY - h / 2 + config.text.fontSize + randNum(-offset, offset)
-        dis = Math.sqrt(dirX**2 + dirY**2)
-        dirX /= dis
-        dirY /= dis
-        
-        factor = randNum(w/6, w/4)
-        destX = particles[i].posX + dirX * factor
-        destY = particles[i].posY + dirY * factor
+      startAnimation = false;
+      if(clickTimes == 0) {
+        changeSubtitle('Happy New Year', 8000);
+      }
+      
+      setTimeout(() => {
+        startAnimation = true;
+      }, 8000);
 
-        deltaX[i] = destX - particles[i].posX;
-        deltaY[i] = destY - particles[i].posY;
-        startX[i] = particles[i].posX;
-        startY[i] = particles[i].posY;
+      clickTimes++;
+      afterClick = true;
+
+      // 点击次数增加，更新wordIndex
+      wordIndex = (clickTimes % 2 != 0) ? Math.floor(clickTimes / 2) % words.text.length
+                                        : Math.floor((clickTimes-1) / 2) % words.text.length;
+
+      // 奇数次点击时记录粒子位置，及粒子位置到目标位置的差值
+      if(clickTimes % 2 != 0) {
+        for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
+          offset = 3.0
+          deltaX[i] = words.textPixelPosArray[wordIndex][i].x - particles[i].posX + randNum(-offset, offset);
+          deltaY[i] = words.textPixelPosArray[wordIndex][i].y - particles[i].posY + randNum(-offset, offset);
+          startX[i] = particles[i].posX;
+          startY[i] = particles[i].posY;
+
+          base = (words.pixelSize - particles[i].radius) / randNum(2.0, 3.5)
+          deltaRadius[i] = base;
+          startRadius[i] = particles[i].radius;
+
+          deltaAlpha[i] = 1.0 - particles[i].alpha
+          startAlpha[i] = particles[i].alpha
+        }
+      } else {
+        for(let i = 0; i < words.textPixelPosArray[wordIndex].length; i++) {
+          offset = 200.0
+
+          dirX = particles[i].posX - w / 2 + randNum(-offset, offset)
+          dirY = particles[i].posY - h / 2 + config.text.fontSize + randNum(-offset, offset)
+          dis = Math.sqrt(dirX**2 + dirY**2)
+          dirX /= dis
+          dirY /= dis
+          
+          factor = randNum(w/6, w/4)
+          destX = particles[i].posX + dirX * factor
+          destY = particles[i].posY + dirY * factor
+
+          deltaX[i] = destX - particles[i].posX;
+          deltaY[i] = destY - particles[i].posY;
+          startX[i] = particles[i].posX;
+          startY[i] = particles[i].posY;
+        }
       }
     }
-  }
+  })();
 
   window.requestAnimationFrame(() => {
     animate(particles);
@@ -249,7 +264,7 @@ window.onload = () => {
 
   // subtitle
   changeSubtitle('At the end of 2020', 2000);
-  changeSubtitle('There is a special gift for u.', 5000);
+  changeSubtitle('There is a special gift for u', 5000);
 
   // type
   setTimeout(() => {
@@ -259,8 +274,22 @@ window.onload = () => {
       backSpeed: 50,
 
       onComplete: () => {
-        console.log('complete')
+        // remove letters
+        for(let i = 0; i < 3; i++) {
+          const letter = document.getElementsByClassName('letter')[2 - i];
+          setTimeout(() => {
+            letter.style.opacity = 0;
+          }, 1000 + 1000 * i)
+        }
+
+        setTimeout(() => {
+          startAnimation = true
+        }, 4000);
       }
     });
   }, 8000);
+
+  // setInterval(() => {
+  //   // scroll to bottom
+  // }, 500);
 }

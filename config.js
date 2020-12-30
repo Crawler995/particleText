@@ -1,6 +1,6 @@
 const config = {
   text: {
-    content: ['2021'],
+    content: ['2020'],
     // content: ['as', 'df'],
     fontSize: 100,
     pixelSize: 4

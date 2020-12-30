@@ -82,6 +82,8 @@ p {
   animation: letter-1-in 3s;
   animation-delay: 5s;
   animation-fill-mode: forwards;
+
+  transition: all 3s;
 }
 
 @keyframes letter-1-in
@@ -107,6 +109,8 @@ p {
   animation: letter-2-in 3s;
   animation-delay: 4.5s;
   animation-fill-mode: forwards;
+
+  transition: all 3s;
 }
 
 @keyframes letter-2-in
@@ -131,6 +135,8 @@ p {
   animation: letter-3-in 3s;
   animation-delay: 4s;
   animation-fill-mode: forwards;
+
+  transition: all 3s;
 }
 
 @keyframes letter-3-in {
