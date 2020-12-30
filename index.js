@@ -10,7 +10,7 @@ let afterClickFrames = 0;
 // 是否在鼠标点击后afterClickParticleMoveFrames帧之内
 let afterClick = false;
 // 鼠标点击后粒子需要多少帧的时间去运动到指定位置
-const afterClickParticleMoveInFrames = 250;
+const afterClickParticleMoveInFrames = 300;
 const afterClickParticleMoveOutFrames = 90;
 // 记录鼠标点击后粒子位置，及粒子位置到目标位置的差值
 let deltaX = null;
@@ -284,7 +284,7 @@ window.onload = () => {
 
         setTimeout(() => {
           startAnimation = true
-        }, 4000);
+        }, 5000);
       }
     });
   }, 8000);
